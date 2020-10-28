@@ -17,9 +17,10 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('admin/css/sb-admin-2.min.css')}}" rel="stylesheet">
-
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"> 
     {{--  External CSS  --}}
-    @yield('external-css')
+    @yield('css')
 
 </head>
 
@@ -102,9 +103,14 @@
 <script src="{{asset('admin/vendor/jquery-easing/jquery.easing.min.js')}}"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('admin/js/sb-admin-2.min.js')}}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+
 
 {{--Custom Scripts--}}
-@yield('custom-script')
+@yield('js')
+{!! Toastr::message() !!}
 
 </body>
 

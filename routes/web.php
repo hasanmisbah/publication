@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,3 +19,10 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/me', [\App\Http\Controllers\Admin\DashbordController::class, 'index'])->name('dashboard');
+
+Route::group([
+    'prefix' => 'admin',
+    'namespace' => '\App\Http\Controllers\Admin',
+], function () {
+    Route::resource('customers', CustomerController::class);
+});

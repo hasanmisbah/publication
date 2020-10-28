@@ -3,6 +3,7 @@
 ## Things To do
 - [x] app initialize
 - [x] Initialized Admin Layout
+- [x] Completed Customer Crud
 - [ ] User Crud
 - [ ] Author Crud
 - [ ] Book Crud
