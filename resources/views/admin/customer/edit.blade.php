@@ -7,7 +7,6 @@
 
 @endsection
 @section('main-content')
- <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <a href="{{ route('customers.index') }}" class="btn btn-primary btn-icon-split">

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
-use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
@@ -38,13 +38,18 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        Customer::create([
+        $save = Customer::create([
             'name' => $request->customer_name,
             'email' => $request->customer_email,
             'phone' => $request->customer_phone,
             'address' => $request->customer_address,
         ]);
-        Toastr::success('User Successfully Added', 'Success');
+
+        if (!$save) {
+            Session::flash('messages', ['type' => 'error', 'messages' => 'Something went wrong']);
+            return redirect()->back();
+        }
+        Session::flash('messages', ['type' => 'success', 'messages' => 'Successfully Saved']);
         return redirect()->route('customers.index');
     }
 
@@ -56,7 +61,8 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer)
     {
-        //
+        $customers = Customer::latest()->get();
+        return view('admin.customer.index', compact('customers', $customers));
     }
 
     /**
@@ -67,7 +73,8 @@ class CustomerController extends Controller
      */
     public function edit(Customer $customer)
     {
-        return view('admin.customer.edit', compact('customer', $customer));
+        $customers = Customer::latest()->get();
+        return view('admin.customer.index', compact('customers', $customers));
     }
 
     /**
@@ -79,14 +86,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, Customer $customer)
     {
-        $customer->update([
+        $save = $customer->update([
             'name' => $request->customer_name,
             'email' => $request->customer_email,
             'phone' => $request->customer_phone,
             'address' => $request->customer_address,
         ]);
-        Toastr::success('User Successfully Updated', 'Success');
+        if (!$save) {
+            Session::flash('messages', ['type' => 'error', 'messages' => 'Something went wrong']);
+            return redirect()->back();
+        }
+        Session::flash('messages', ['type' => 'success', 'messages' => 'Successfully Updated']);
         return redirect()->route('customers.index');
+
     }
 
     /**
@@ -97,8 +109,13 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer)
     {
-        $customer->delete();
-        Toastr::success('User Successfully Deleted', 'Success');
+        $save = $customer->delete();
+        if (!$save) {
+            Session::flash('messages', ['type' => 'error', 'messages' => 'Something went wrong']);
+            return redirect()->back();
+        }
+        Session::flash('messages', ['type' => 'success', 'messages' => 'Successfully Deleted']);
         return redirect()->route('customers.index');
+
     }
 }
